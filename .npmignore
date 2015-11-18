@@ -1,0 +1,7 @@
+/.vscode/
+/src/
+/test/
+/typings/
+/.editorconfig
+/.gitignore
+/tsconfig.json
