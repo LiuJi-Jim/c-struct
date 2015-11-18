@@ -26,7 +26,7 @@ const arrayMap = {
 
 const readWriteFuncMap = (function() {
   var proto = Buffer.prototype
-  var dict = {};
+  var dict = {}; // tsc will remove some line breaks incorrectly, which leads this code sucks, wtf
   ['LE', 'BE'].forEach(function(end) {
     ['UInt16', 'Int16', 'UInt32', 'Int32', 'Float', 'Double'].forEach(function(type) {
       var key = type + end
@@ -34,7 +34,7 @@ const readWriteFuncMap = (function() {
         proto[`read${key}`],
         proto[`write${key}`]
       ]
-    });
+    }); // tsc will remove some line breaks incorrectly, which leads this code sucks, wtf
     ['UInt8', 'Int8'].forEach(function(type) {
       var key = type + end
       dict[key] = [
@@ -45,11 +45,6 @@ const readWriteFuncMap = (function() {
   })
   return dict
 })()
-
-function getReadWriteFunc(type: string, endianness: string) {
-  // expand conditions for optimizing
-  return
-}
 
 function defineReadonlyProperty(o: any, name: string, value: any, enumerable = true) {
   Object.defineProperty(o, name, {

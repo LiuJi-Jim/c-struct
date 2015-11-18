@@ -14,6 +14,14 @@
     "dist": "tsc -p .",
     "dev": "tsc -p . -w"
   },
+  "keywords": [
+    "struct",
+    "binary",
+    "buffer"
+  ],
+  "engines": {
+    "node": ">=4.0.0"
+  },
   "author": "liuji-jim",
   "license": "MIT"
 }

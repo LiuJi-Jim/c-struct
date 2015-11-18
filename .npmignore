@@ -5,3 +5,4 @@
 /.editorconfig
 /.gitignore
 /tsconfig.json
+npm-debug.log
