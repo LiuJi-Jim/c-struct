@@ -9,10 +9,10 @@ A node.js package to deal with c-structs in an easy way.
 ```
 var cstruct = require('c-struct')
 
-var Simple = cstruct.define([
+var Simple = cstruct.define(
   cstruct.uint8('first'),
   cstruct.int8('second')
-])
+)
 
 Simple.size // 2
 
@@ -43,7 +43,7 @@ one._buffer === buffer // true
 ### Defining a Struct Type
 
 ```
-var MyStruct = cstruct.define(definitions: Definition): CStructType
+var MyStruct = cstruct.define(...definitions: Definition): CStructType
 ```
 
 ### Types
@@ -88,28 +88,28 @@ cstruct.Double // -> Float64Array
 e.g.
 
 ```
-var List = cstruct.define([
+var List = cstruct.define(
   cstruct.array('values', cstruct.Uint8, 16)
-])
+)
 ```
 
 or other `CStructType`, e.g.
 
 ```
-var Complex = cstruct.define([
+var Complex = cstruct.define(
   cstruct.array('list', Simple, 4)
-])
+)
 // list field will be proxed as Array<Simple>
 ```
 
 or arrays
 
 ```
-var Matrix4 = cstruct.define([
+var Matrix4 = cstruct.define(
   cstruct.array('data', cstruct.arrayOf(
     cstruct.Float, 4
   ), 4)
-])
+)
 // data field will be proxied as Array<Float32Array>
 ```
 
@@ -122,14 +122,14 @@ but note that array fields have only getters, so if you wanted to mutate the ent
 structs could be nested
 
 ```
-var Point = cstruct.define([
+var Point = cstruct.define(
   cstruct.float('x'),
   cstruct.float('y')
-])
-var Segment = cstruct.define([
+)
+var Segment = cstruct.define(
   cstruct.struct('start', Point),
   cstruct.struct('end', Point)
-])
+)
 ```
 
 still note that nested struct fields have only getters.
@@ -139,11 +139,11 @@ still note that nested struct fields have only getters.
 ```
 // CStructType below infers any Struct you defined
 
-new CStructType(buffer[, 'LE']) // or 'BE' to specify endianness. default to os.endianness
+new CStructType(buffer: Buffer, endianness?: string) // 'LE' or 'BE' to specify endianness. default to os.endianness
 
 CStructType.size // byte size of this type
 
-CStructType.alloc(['LE']) // allocate a new Buffer and returns the struct instance build on it
+CStructType.alloc(endianness?: string) // allocate a new Buffer and returns the struct instance build on it
 
 instance._copy() // copy the instance's Buffer and returns a new instance build on it. this is deep clone
 
@@ -159,11 +159,11 @@ instance._endianness // get the instance's endianness
 c-struct doesn't deal with byte alignment. sometimes your definition will suck if it doesn't fit byte alignments, for example:
 
 ```
-var MyType = cstruct.define([
+var MyType = cstruct.define(
   cstruct.uint8('first'),
   cstruct.uint8('second'),
   cstruct.array('arr', cstruct.Int32, 4)
-])
+)
 var mt = MyType.alloc()
 mt.arr // sucked
 ```
@@ -173,13 +173,13 @@ mt.arr // sucked
 to fix this you must manually deal with byte alignment, you can put padding fields to match the C struct's memory layout. e.g.
 
 ```
-var MyType = cstruct.define([
+var MyType = cstruct.define(
   cstruct.uint8('first'),
   cstruct.uint8('second'),
   cstruct.padding(),
   cstruct.padding(),
   cstruct.array('arr', cstruct.Int32, 4)
-])
+)
 var mt = MyType.alloc()
 mt.arr // oh yeah
 ```

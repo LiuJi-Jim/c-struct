@@ -12,17 +12,17 @@ function split() {
   console.log('----------------------------------------')
 }
 
-var TestStruct = cstruct.define([
+var TestStruct = cstruct.define(
   cstruct.uint32('value')
-])
+)
 var t = TestStruct.alloc()
 var buf = t._buffer
 split()
 
 function testDefine() {
-  return cstruct.define([
+  return cstruct.define(
     cstruct.uint32('value')
-  ])
+  )
 }
 var define_times = 1e4
 var t_define = perf(testDefine, define_times)

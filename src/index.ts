@@ -230,7 +230,7 @@ module cstruct {
     alloc?(endianness?: string): CStruct
   }
 
-  export function define(definitions: Definition[]): CStructType {
+  export function define(...definitions: Definition[]): CStructType {
     var ctor: CStructType = function(buffer: Buffer, endianness?: string) {
       var me = <CStruct>this
       defineReadonlyProperty(me, '_buffer', buffer, false)
@@ -272,7 +272,7 @@ module cstruct {
     return ctor as CStructType
   }
 
-  export function field(name: string, field: Field) {
+  function field(name: string, field: Field) {
     return {
       name: name,
       field: field
@@ -288,7 +288,7 @@ module cstruct {
   export var Float = new PrimitiveField(PrimitiveType.Float)
   export var Double = new PrimitiveField(PrimitiveType.Double)
 
-  export function primitive(name: string, field: PrimitiveField): Definition {
+  function primitive(name: string, field: PrimitiveField): Definition {
     return {
       name: name,
       field: field

@@ -5,15 +5,15 @@ function dumpArray(arr, mapper) {
   return '[' + arr.map(mapper).join(', ') + ']'
 }
 
-var Simple = cstruct.define([
+var Simple = cstruct.define(
   cstruct.uint8('first'),
   cstruct.int8('second')
-])
+)
 Simple.prototype.toString = function() {
   return `(${this.first}, ${this.second})`
 }
 
-var FirstBlood = cstruct.define([
+var FirstBlood = cstruct.define(
   cstruct.uint8('first'),
   cstruct.int8('second'),
   cstruct.struct('simple', Simple),
@@ -25,7 +25,7 @@ var FirstBlood = cstruct.define([
   cstruct.array('simples2d', cstruct.arrayOf(
     Simple, 2
   ), 4)
-])
+)
 
 console.log(FirstBlood)
 
